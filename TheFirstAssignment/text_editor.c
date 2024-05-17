@@ -40,3 +40,41 @@ void appendText(Line **head, const char *text) {
     current->text = realloc(current->text, newLength);
     strcat(current->text, text);
 }
+
+void saveToFile(Line *head, const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    Line *current = head;
+    while (current != NULL) {
+        fprintf(file, "%s\n", current->text);
+        current = current->next;
+    }
+    fclose(file);
+}
+
+void loadFromFile(Line **head, const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    clearText(head);
+    char buffer[1024];
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+        removeNewline(buffer);
+        startNewLine(head);
+        appendText(head, buffer);
+    }
+    fclose(file);
+}
+
+void printCurrentText(Line *head) {
+    Line *current = head;
+    while (current != NULL) {
+        printf("%s\n", current->text);
+        current = current->next;
+    }
+}
