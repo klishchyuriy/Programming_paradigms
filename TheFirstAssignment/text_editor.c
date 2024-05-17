@@ -101,3 +101,17 @@ void insertText(Line *head, int lineNumber, int charIndex, const char *text) {
     free(current->text);
     current->text = newText;
 }
+
+void searchText(Line *head, const char *query) {
+    Line *current = head;
+    int lineNumber = 0;
+    while (current != NULL) {
+        char *pos = strstr(current->text, query);
+        while (pos != NULL) {
+            printf("Found at line %d, character %ld\n", lineNumber, pos - current->text);
+            pos = strstr(pos + 1, query);
+        }
+        current = current->next;
+        lineNumber++;
+    }
+}
