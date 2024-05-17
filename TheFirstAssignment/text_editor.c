@@ -92,4 +92,12 @@ void insertText(Line *head, int lineNumber, int charIndex, const char *text) {
         fprintf(stderr, "Invalid character index\n");
         return;
     }
+    size_t newLength = strlen(current->text) + strlen(text) + 1;
+    char *newText = malloc(newLength);
+    strncpy(newText, current->text, charIndex);
+    newText[charIndex] = '\0';
+    strcat(newText, text);
+    strcat(newText, current->text + charIndex);
+    free(current->text);
+    current->text = newText;
 }
