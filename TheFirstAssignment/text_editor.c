@@ -26,3 +26,16 @@ void startNewLine(Line **head) {
         current->next = newLine;
     }
 }
+
+void appendText(Line **head, const char *text) {
+    if (*head == NULL) {
+        startNewLine(head);
+    }
+    Line *current = *head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    size_t newLength = strlen(current->text) + strlen(text) + 1;
+    current->text = realloc(current->text, newLength);
+    strcat(current->text, text);
+}
