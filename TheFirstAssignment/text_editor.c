@@ -88,7 +88,8 @@ void insertText(Line *head, int lineNumber, int charIndex, const char *text) {
         }
         current = current->next;
     }
-    if (charIndex < 0 || charIndex > (int)strlen(current->text)) {
+    if (charIndex < 0 || charIndex > (int) strlen(current->text)) {
         fprintf(stderr, "Invalid character index\n");
         return;
     }
+}
