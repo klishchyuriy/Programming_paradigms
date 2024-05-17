@@ -115,3 +115,14 @@ void searchText(Line *head, const char *query) {
         lineNumber++;
     }
 }
+
+void clearText(Line **head) {
+    Line *current = *head;
+    while (current != NULL) {
+        Line *next = current->next;
+        free(current->text);
+        free(current);
+        current = next;
+    }
+    *head = NULL;
+}
