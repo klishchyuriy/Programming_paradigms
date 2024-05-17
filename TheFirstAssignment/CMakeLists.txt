@@ -4,4 +4,5 @@ project(TheFirstAssignment C)
 set(CMAKE_C_STANDARD 23)
 
 add_executable(TheFirstAssignment main.c
-        text_editor.h)
+        text_editor.h
+        text_editor.c)
