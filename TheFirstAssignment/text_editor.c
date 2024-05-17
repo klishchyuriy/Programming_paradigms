@@ -78,3 +78,17 @@ void printCurrentText(Line *head) {
         current = current->next;
     }
 }
+
+void insertText(Line *head, int lineNumber, int charIndex, const char *text) {
+    Line *current = head;
+    for (int i = 0; i < lineNumber; ++i) {
+        if (current == NULL) {
+            fprintf(stderr, "Invalid line number\n");
+            return;
+        }
+        current = current->next;
+    }
+    if (charIndex < 0 || charIndex > (int)strlen(current->text)) {
+        fprintf(stderr, "Invalid character index\n");
+        return;
+    }
