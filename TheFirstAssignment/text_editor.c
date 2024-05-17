@@ -3,7 +3,6 @@
 #include <string.h>
 #include "text_editor.h"
 
-
 void removeNewline(char *str) {
     size_t length = strlen(str);
     if (length > 0 && str[length - 1] == '\n') {
