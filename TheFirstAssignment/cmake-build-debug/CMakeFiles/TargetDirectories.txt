@@ -1,0 +1,3 @@
+/Users/klishchyuriy/MyProjects/Programming_paradigms/TheFirstAssignment/cmake-build-debug/CMakeFiles/TheFirstAssignment.dir
+/Users/klishchyuriy/MyProjects/Programming_paradigms/TheFirstAssignment/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/klishchyuriy/MyProjects/Programming_paradigms/TheFirstAssignment/cmake-build-debug/CMakeFiles/rebuild_cache.dir
