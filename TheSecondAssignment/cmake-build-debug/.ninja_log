@@ -1,3 +1,6 @@
 # ninja log v5
 1	297	1717068564770430010	CMakeFiles/TheSecondAssignment.dir/main.cpp.o	c0be86f54bb434fa
 298	322	1717068564797284526	TheSecondAssignment	d0a7c99e0d5246b4
+6	292	1717070699538385493	CMakeFiles/TheSecondAssignment.dir/main.cpp.o	c0be86f54bb434fa
+6	365	1717070699611623979	CMakeFiles/TheSecondAssignment.dir/text_editor.cpp.o	af520e996dacfcfb
+365	395	1717070699642810464	TheSecondAssignment	e16a9d5fb1ea7a74
