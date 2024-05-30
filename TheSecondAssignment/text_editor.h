@@ -1,34 +1,36 @@
 #ifndef THESECONDASSIGNMENT_TEXT_EDITOR_H
 #define THESECONDASSIGNMENT_TEXT_EDITOR_H
 
-#include "string"
-#include "vector"
-
 class Line {
 public:
-    Line(const std::string &text = "");
-    std::string getText() const;
-    void appendText(const std::string &text);
-    void insertText(int charIndex, const std::string &text);
+    Line(const char *text = "");
+    ~Line();
+    const char* getText() const;
+    void appendText(const char *text);
+    void insertText(int charIndex, const char *text);
+
+    Line *next;
 
 private:
-    std::string text;
+    char *text;
+    void setText(const char *newText);
 };
 
 class TextEditor {
 public:
     TextEditor();
-    void appendText(const std::string &text);
+    ~TextEditor();
+    void appendText(const char *text);
     void startNewLine();
-    void saveToFile(const std::string &filename) const;
-    void loadFromFile(const std::string &filename);
+    void saveToFile(const char *filename) const;
+    void loadFromFile(const char *filename);
     void printCurrentText() const;
-    void insertText(int lineNumber, int charIndex, const std::string &text);
-    void searchText(const std::string &query) const;
+    void insertText(int lineNumber, int charIndex, const char *text);
+    void searchText(const char *query) const;
     void clearText();
 
 private:
-    std::vector<Line> lines;
+    Line *head;
 };
 
 #endif

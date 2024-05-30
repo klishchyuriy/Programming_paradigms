@@ -1,88 +1,153 @@
 #include "text_editor.h"
 #include <iostream>
 #include <fstream>
+#include <cstring>
 
-Line::Line(const std::string &text) : text(text) {}
+Line::Line(const char *text) : next(nullptr), text(nullptr) {
+    setText(text);
+}
 
-std::string Line::getText() const {
+Line::~Line() {
+    delete[] text;
+}
+
+const char* Line::getText() const {
     return text;
 }
 
-void Line::appendText(const std::string &text) {
-    this->text += text;
+void Line::setText(const char *newText) {
+    if (text) {
+        delete[] text;
+    }
+    text = new char[strlen(newText) + 1];
+    strcpy(text, newText);
 }
 
-void Line::insertText(int charIndex, const std::string &text) {
-    if (charIndex < 0 || charIndex > static_cast<int>(this->text.length())) {
+void Line::appendText(const char *newText) {
+    char *temp = new char[strlen(text) + strlen(newText) + 1];
+    strcpy(temp, text);
+    strcat(temp, newText);
+    setText(temp);
+    delete[] temp;
+}
+
+void Line::insertText(int charIndex, const char *newText) {
+    if (charIndex < 0 || charIndex > static_cast<int>(strlen(text))) {
         std::cerr << "Invalid character index\n";
         return;
     }
-    this->text.insert(charIndex, text);
+    char *temp = new char[strlen(text) + strlen(newText) + 1];
+    strncpy(temp, text, charIndex);
+    temp[charIndex] = '\0';
+    strcat(temp, newText);
+    strcat(temp, text + charIndex);
+    setText(temp);
+    delete[] temp;
 }
 
-TextEditor::TextEditor() {}
+TextEditor::TextEditor() : head(nullptr) {}
 
-void TextEditor::appendText(const std::string &text) {
-    if (lines.empty()) {
+TextEditor::~TextEditor() {
+    clearText();
+}
+
+void TextEditor::appendText(const char *text) {
+    if (!head) {
         startNewLine();
     }
-    lines.back().appendText(text);
+    Line *current = head;
+    while (current->next) {
+        current = current->next;
+    }
+    current->appendText(text);
 }
 
 void TextEditor::startNewLine() {
-    lines.emplace_back("");
+    Line *newLine = new Line("");
+    if (!head) {
+        head = newLine;
+    } else {
+        Line *current = head;
+        while (current->next) {
+            current = current->next;
+        }
+        current->next = newLine;
+    }
 }
 
-void TextEditor::saveToFile(const std::string &filename) const {
+void TextEditor::saveToFile(const char *filename) const {
     std::ofstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file\n";
         return;
     }
-    for (const auto &line : lines) {
-        file << line.getText() << "\n";
+    Line *current = head;
+    while (current) {
+        file << current->getText() << "\n";
+        current = current->next;
     }
+    file.close();
 }
 
-void TextEditor::loadFromFile(const std::string &filename) {
+void TextEditor::loadFromFile(const char *filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file\n";
         return;
     }
     clearText();
-    std::string buffer;
-    while (std::getline(file, buffer)) {
+    char buffer[1024];
+    while (file.getline(buffer, sizeof(buffer))) {
         startNewLine();
         appendText(buffer);
     }
+    file.close();
 }
 
 void TextEditor::printCurrentText() const {
-    for (const auto &line : lines) {
-        std::cout << line.getText() << "\n";
+    Line *current = head;
+    while (current) {
+        std::cout << current->getText() << "\n";
+        current = current->next;
     }
 }
 
-void TextEditor::insertText(int lineNumber, int charIndex, const std::string &text) {
-    if (lineNumber < 0 || lineNumber >= static_cast<int>(lines.size())) {
-        std::cerr << "Invalid line number\n";
-        return;
-    }
-    lines[lineNumber].insertText(charIndex, text);
-}
-
-void TextEditor::searchText(const std::string &query) const {
-    for (size_t i = 0; i < lines.size(); ++i) {
-        const auto &line = lines[i];
-        size_t pos = line.getText().find(query);
-        while (pos != std::string::npos) {
-            std::cout << "Found at line " << i << ", character " << pos << "\n";
-            pos = line.getText().find(query, pos + 1);
+void TextEditor::insertText(int lineNumber, int charIndex, const char *text) {
+    Line *current = head;
+    for (int i = 0; i < lineNumber; ++i) {
+        if (!current) {
+            std::cerr << "Invalid line number\n";
+            return;
         }
+        current = current->next;
+    }
+    if (current) {
+        current->insertText(charIndex, text);
+    } else {
+        std::cerr << "Invalid line number\n";
+    }
+}
+
+void TextEditor::searchText(const char *query) const {
+    Line *current = head;
+    int lineNumber = 0;
+    while (current) {
+        const char *pos = strstr(current->getText(), query);
+        while (pos) {
+            std::cout << "Found at line " << lineNumber << ", character " << (pos - current->getText()) << "\n";
+            pos = strstr(pos + 1, query);
+        }
+        current = current->next;
+        lineNumber++;
     }
 }
 
 void TextEditor::clearText() {
-    lines.clear();
+    Line *current = head;
+    while (current) {
+        Line *next = current->next;
+        delete current;
+        current = next;
+    }
+    head = nullptr;
 }

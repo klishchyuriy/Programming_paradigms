@@ -14,9 +14,10 @@ void printMenu() {
     std::cout << "0. Exit\n";
 }
 
-void removeNewline(std::string &str) {
-    if (!str.empty() && str.back() == '\n') {
-        str.pop_back();
+void removeNewline(char *str) {
+    size_t length = strlen(str);
+    if (length > 0 && str[length - 1] == '\n') {
+        str[length - 1] = '\0';
     }
 }
 
@@ -31,9 +32,9 @@ int main() {
 
         switch (command) {
             case 1: {
-                std::string text;
+                char text[1024];
                 std::cout << "Enter text to append: ";
-                std::getline(std::cin, text);
+                std::cin.getline(text, sizeof(text));
                 removeNewline(text);
                 editor.appendText(text);
                 break;
@@ -43,18 +44,18 @@ int main() {
                 std::cout << "New line is started\n";
                 break;
             case 3: {
-                std::string filename;
+                char filename[1024];
                 std::cout << "Enter the file name for saving: ";
-                std::getline(std::cin, filename);
+                std::cin.getline(filename, sizeof(filename));
                 removeNewline(filename);
                 editor.saveToFile(filename);
                 std::cout << "Text has been saved successfully\n";
                 break;
             }
             case 4: {
-                std::string filename;
+                char filename[1024];
                 std::cout << "Enter the file name for loading: ";
-                std::getline(std::cin, filename);
+                std::cin.getline(filename, sizeof(filename));
                 removeNewline(filename);
                 editor.loadFromFile(filename);
                 std::cout << "Text has been loaded successfully\n";
@@ -65,20 +66,20 @@ int main() {
                 break;
             case 6: {
                 int lineNumber, charIndex;
-                std::string text;
+                char text[1024];
                 std::cout << "Enter line number and character index: ";
                 std::cin >> lineNumber >> charIndex;
                 std::cin.ignore();
                 std::cout << "Enter text to insert: ";
-                std::getline(std::cin, text);
+                std::cin.getline(text, sizeof(text));
                 removeNewline(text);
                 editor.insertText(lineNumber, charIndex, text);
                 break;
             }
             case 7: {
-                std::string query;
+                char query[1024];
                 std::cout << "Enter text to search: ";
-                std::getline(std::cin, query);
+                std::cin.getline(query, sizeof(query));
                 removeNewline(query);
                 editor.searchText(query);
                 break;
@@ -96,4 +97,3 @@ int main() {
         }
     }
 }
-
