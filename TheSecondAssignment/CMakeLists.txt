@@ -3,4 +3,6 @@ project(TheSecondAssignment)
 
 set(CMAKE_CXX_STANDARD 26)
 
-add_executable(TheSecondAssignment main.cpp)
+add_executable(TheSecondAssignment main.cpp
+        text_editor.cpp
+        text_editor.h)
