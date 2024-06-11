@@ -14,16 +14,10 @@ void printMenu() {
     std::cout << "0. Exit\n";
 }
 
-void removeNewline(char *str) {
-    size_t length = strlen(str);
-    if (length > 0 && str[length - 1] == '\n') {
-        str[length - 1] = '\0';
-    }
-}
-
 int main() {
     TextEditor editor;
     int command;
+
     while (true) {
         printMenu();
         std::cout << "> ";
@@ -34,11 +28,10 @@ int main() {
             case 1: {
                 char text[1024];
                 std::cout << "Enter text to append: ";
-                std::cin.getline(text, sizeof(text));
-                removeNewline(text);
+                std::cin.getline(text, 1024);
                 editor.appendText(text);
-                break;
             }
+                break;
             case 2:
                 editor.startNewLine();
                 std::cout << "New line is started\n";
@@ -46,53 +39,48 @@ int main() {
             case 3: {
                 char filename[1024];
                 std::cout << "Enter the file name for saving: ";
-                std::cin.getline(filename, sizeof(filename));
-                removeNewline(filename);
+                std::cin.getline(filename, 1024);
                 editor.saveToFile(filename);
-                std::cout << "Text has been saved successfully\n";
-                break;
             }
+                break;
             case 4: {
                 char filename[1024];
                 std::cout << "Enter the file name for loading: ";
-                std::cin.getline(filename, sizeof(filename));
-                removeNewline(filename);
+                std::cin.getline(filename, 1024);
                 editor.loadFromFile(filename);
-                std::cout << "Text has been loaded successfully\n";
-                break;
             }
+                break;
             case 5:
                 editor.printCurrentText();
                 break;
             case 6: {
                 int lineNumber, charIndex;
                 char text[1024];
-                std::cout << "Enter line number and character index: ";
-                std::cin >> lineNumber >> charIndex;
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
                 std::cin.ignore();
                 std::cout << "Enter text to insert: ";
-                std::cin.getline(text, sizeof(text));
-                removeNewline(text);
+                std::cin.getline(text, 1024);
                 editor.insertText(lineNumber, charIndex, text);
-                break;
             }
+                break;
             case 7: {
                 char query[1024];
                 std::cout << "Enter text to search: ";
-                std::cin.getline(query, sizeof(query));
-                removeNewline(query);
+                std::cin.getline(query, 1024);
                 editor.searchText(query);
-                break;
             }
+                break;
             case 8:
-                std::cout << "\033[2J\033[1;1H";
+                editor.clearText();
+                std::cout << "Console cleared\n";
                 break;
             case 0:
-                editor.clearText();
-                std::cout << "Exiting the editor...\n";
                 return 0;
             default:
-                std::cout << "Invalid command, please try again.\n";
+                std::cerr << "Invalid command\n";
                 break;
         }
     }
