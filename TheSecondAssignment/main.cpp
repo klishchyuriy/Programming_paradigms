@@ -17,7 +17,12 @@ void printMenu() {
     std::cout << "12. Paste text\n";
     std::cout << "13. Copy text\n";
     std::cout << "14. Insert text with replacement\n";
-    std::cout << "15. Clear console\n";
+    std::cout << "15. Move cursor\n";
+    std::cout << "16. Cut text at cursor\n";
+    std::cout << "17. Copy text at cursor\n";
+    std::cout << "18. Paste text at cursor\n";
+    std::cout << "19. Delete text at cursor\n";
+    std::cout << "20. Clear console\n";
     std::cout << "0. Exit\n";
 }
 
@@ -145,7 +150,45 @@ int main() {
                 editor.insertTextWithReplacement(lineNumber, charIndex, text);
             }
                 break;
-            case 15:
+            case 15: {
+                int lineNumber, charIndex;
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
+                std::cin.ignore();
+                editor.moveCursor(lineNumber, charIndex);
+                std::cout << "Cursor moved to line " << lineNumber << ", index " << charIndex << "\n";
+            }
+                break;
+            case 16: {
+                int numChars;
+                std::cout << "Enter number of characters to cut: ";
+                std::cin >> numChars;
+                std::cin.ignore();
+                editor.cutTextAtCursor(numChars);
+            }
+                break;
+            case 17: {
+                int numChars;
+                std::cout << "Enter number of characters to copy: ";
+                std::cin >> numChars;
+                std::cin.ignore();
+                editor.copyTextAtCursor(numChars);
+            }
+                break;
+            case 18:
+                editor.pasteTextAtCursor();
+                break;
+            case 19: {
+                int numChars;
+                std::cout << "Enter number of characters to delete: ";
+                std::cin >> numChars;
+                std::cin.ignore();
+                editor.deleteTextAtCursor(numChars);
+            }
+                break;
+            case 20:
                 editor.clearText();
                 std::cout << "Console cleared\n";
                 break;
