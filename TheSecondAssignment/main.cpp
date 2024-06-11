@@ -11,7 +11,9 @@ void printMenu() {
     std::cout << "6. Insert text by line and symbol index\n";
     std::cout << "7. Search text\n";
     std::cout << "8. Delete text by line, index, and number of symbols\n";
-    std::cout << "9. Clear console\n";
+    std::cout << "9. Undo last command\n";
+    std::cout << "10. Redo last command\n";
+    std::cout << "11. Clear console\n";
     std::cout << "0. Exit\n";
 }
 
@@ -87,6 +89,12 @@ int main() {
             }
                 break;
             case 9:
+                editor.undo();
+                break;
+            case 10:
+                editor.redo();
+                break;
+            case 11:
                 editor.clearText();
                 std::cout << "Console cleared\n";
                 break;

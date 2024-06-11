@@ -9,7 +9,31 @@ TextEditor::~TextEditor() {
     clearText();
 }
 
+void TextEditor::saveState(std::stack<Line*>& stack) {
+    Line* newState = nullptr;
+    Line* current = head;
+    Line** newCurrent = &newState;
+    while (current) {
+        *newCurrent = new Line{strdup(current->text), nullptr};
+        current = current->next;
+        newCurrent = &((*newCurrent)->next);
+    }
+    stack.push(newState);
+}
+
+void TextEditor::restoreState(std::stack<Line*>& stack) {
+    if (stack.empty()) {
+        std::cerr << "No more states to restore\n";
+        return;
+    }
+    clearText();
+    head = stack.top();
+    stack.pop();
+}
+
 void TextEditor::appendText(const char* text) {
+    saveState(undoStack);
+    while (!redoStack.empty()) redoStack.pop();
     if (!head) {
         head = new Line{strdup(text), nullptr};
     } else {
@@ -27,6 +51,8 @@ void TextEditor::appendText(const char* text) {
 }
 
 void TextEditor::startNewLine() {
+    saveState(undoStack);
+    while (!redoStack.empty()) redoStack.pop();
     if (!head) {
         head = new Line{strdup(""), nullptr};
     } else {
@@ -79,6 +105,8 @@ void TextEditor::printCurrentText() const {
 }
 
 void TextEditor::insertText(int lineNumber, int charIndex, const char* text) {
+    saveState(undoStack);
+    while (!redoStack.empty()) redoStack.pop();
     Line* current = head;
     for (int i = 0; i < lineNumber; ++i) {
         if (!current) {
@@ -127,6 +155,8 @@ void TextEditor::clearText() {
 }
 
 void TextEditor::deleteText(int lineNumber, int charIndex, int numChars) {
+    saveState(undoStack);
+    while (!redoStack.empty()) redoStack.pop();
     Line* current = head;
     for (int i = 0; i < lineNumber; ++i) {
         if (!current) {
@@ -149,6 +179,24 @@ void TextEditor::deleteText(int lineNumber, int charIndex, int numChars) {
     strcat(newText, current->text + charIndex + numChars);
     delete[] current->text;
     current->text = newText;
+}
+
+void TextEditor::undo() {
+    if (!undoStack.empty()) {
+        saveState(redoStack);
+        restoreState(undoStack);
+    } else {
+        std::cerr << "No more states to undo\n";
+    }
+}
+
+void TextEditor::redo() {
+    if (!redoStack.empty()) {
+        saveState(undoStack);
+        restoreState(redoStack);
+    } else {
+        std::cerr << "No more states to redo\n";
+    }
 }
 
 void TextEditor::removeNewline(char* str) const {
