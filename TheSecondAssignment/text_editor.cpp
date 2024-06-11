@@ -126,6 +126,31 @@ void TextEditor::clearText() {
     head = nullptr;
 }
 
+void TextEditor::deleteText(int lineNumber, int charIndex, int numChars) {
+    Line* current = head;
+    for (int i = 0; i < lineNumber; ++i) {
+        if (!current) {
+            std::cerr << "Invalid line number\n";
+            return;
+        }
+        current = current->next;
+    }
+    if (charIndex < 0 || charIndex >= (int) strlen(current->text)) {
+        std::cerr << "Invalid character index\n";
+        return;
+    }
+    if (charIndex + numChars > (int) strlen(current->text)) {
+        numChars = strlen(current->text) - charIndex;
+    }
+    size_t newLength = strlen(current->text) - numChars + 1;
+    char* newText = new char[newLength];
+    strncpy(newText, current->text, charIndex);
+    newText[charIndex] = '\0';
+    strcat(newText, current->text + charIndex + numChars);
+    delete[] current->text;
+    current->text = newText;
+}
+
 void TextEditor::removeNewline(char* str) const {
     size_t len = strlen(str);
     if (len > 0 && str[len - 1] == '\n') {

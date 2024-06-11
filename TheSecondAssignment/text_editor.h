@@ -16,6 +16,7 @@ public:
     void insertText(int lineNumber, int charIndex, const char* text);
     void searchText(const char* query) const;
     void clearText();
+    void deleteText(int lineNumber, int charIndex, int numChars);
 
 private:
     struct Line {

@@ -10,7 +10,8 @@ void printMenu() {
     std::cout << "5. Print current text\n";
     std::cout << "6. Insert text by line and symbol index\n";
     std::cout << "7. Search text\n";
-    std::cout << "8. Clear console\n";
+    std::cout << "8. Delete text by line, index, and number of symbols\n";
+    std::cout << "9. Clear console\n";
     std::cout << "0. Exit\n";
 }
 
@@ -73,7 +74,19 @@ int main() {
                 editor.searchText(query);
             }
                 break;
-            case 8:
+            case 8: {
+                int lineNumber, charIndex, numChars;
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
+                std::cout << "Enter number of characters to delete: ";
+                std::cin >> numChars;
+                std::cin.ignore();
+                editor.deleteText(lineNumber, charIndex, numChars);
+            }
+                break;
+            case 9:
                 editor.clearText();
                 std::cout << "Console cleared\n";
                 break;
