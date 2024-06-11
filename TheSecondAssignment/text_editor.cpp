@@ -142,6 +142,31 @@ void TextEditor::insertText(int lineNumber, int charIndex, const char* text) {
     current->text = newText;
 }
 
+void TextEditor::insertTextWithReplacement(int lineNumber, int charIndex, const char* text) {
+    saveState(undoStack);
+    while (!redoStack.empty()) redoStack.pop();
+    Line* current = head;
+    for (int i = 0; i < lineNumber; ++i) {
+        if (!current) {
+            std::cerr << "Invalid line number\n";
+            return;
+        }
+        current = current->next;
+    }
+    if (charIndex < 0 || charIndex >= (int) strlen(current->text)) {
+        std::cerr << "Invalid character index\n";
+        return;
+    }
+    size_t newLength = charIndex + strlen(text) + strlen(current->text + charIndex) + 1;
+    char* newText = new char[newLength];
+    strncpy(newText, current->text, charIndex);
+    newText[charIndex] = '\0';
+    strcat(newText, text);
+    strcat(newText, current->text + charIndex + strlen(text));
+    delete[] current->text;
+    current->text = newText;
+}
+
 void TextEditor::searchText(const char* query) const {
     Line* current = head;
     int lineNumber = 0;

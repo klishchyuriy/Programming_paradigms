@@ -16,7 +16,8 @@ void printMenu() {
     std::cout << "11. Cut text\n";
     std::cout << "12. Paste text\n";
     std::cout << "13. Copy text\n";
-    std::cout << "14. Clear console\n"; // Clear console is always the last command
+    std::cout << "14. Insert text with replacement\n";
+    std::cout << "15. Clear console\n";
     std::cout << "0. Exit\n";
 }
 
@@ -131,7 +132,20 @@ int main() {
                 editor.copyText(lineNumber, charIndex, numChars);
             }
                 break;
-            case 14:
+            case 14: {
+                int lineNumber, charIndex;
+                char text[1024];
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
+                std::cin.ignore();
+                std::cout << "Enter text to replace: ";
+                std::cin.getline(text, 1024);
+                editor.insertTextWithReplacement(lineNumber, charIndex, text);
+            }
+                break;
+            case 15:
                 editor.clearText();
                 std::cout << "Console cleared\n";
                 break;

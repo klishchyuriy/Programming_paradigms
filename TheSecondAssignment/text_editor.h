@@ -15,6 +15,7 @@ public:
     void loadFromFile(const char* filename);
     void printCurrentText() const;
     void insertText(int lineNumber, int charIndex, const char* text);
+    void insertTextWithReplacement(int lineNumber, int charIndex, const char* text);
     void searchText(const char* query) const;
     void clearText();
     void deleteText(int lineNumber, int charIndex, int numChars);
