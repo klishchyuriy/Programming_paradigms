@@ -13,7 +13,10 @@ void printMenu() {
     std::cout << "8. Delete text by line, index, and number of symbols\n";
     std::cout << "9. Undo last command\n";
     std::cout << "10. Redo last command\n";
-    std::cout << "11. Clear console\n";
+    std::cout << "11. Cut text\n";
+    std::cout << "12. Paste text\n";
+    std::cout << "13. Copy text\n";
+    std::cout << "14. Clear console\n"; // Clear console is always the last command
     std::cout << "0. Exit\n";
 }
 
@@ -94,7 +97,41 @@ int main() {
             case 10:
                 editor.redo();
                 break;
-            case 11:
+            case 11: {
+                int lineNumber, charIndex, numChars;
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
+                std::cout << "Enter number of characters to cut: ";
+                std::cin >> numChars;
+                std::cin.ignore();
+                editor.cutText(lineNumber, charIndex, numChars);
+            }
+                break;
+            case 12: {
+                int lineNumber, charIndex;
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
+                std::cin.ignore();
+                editor.pasteText(lineNumber, charIndex);
+            }
+                break;
+            case 13: {
+                int lineNumber, charIndex, numChars;
+                std::cout << "Enter line number: ";
+                std::cin >> lineNumber;
+                std::cout << "Enter character index: ";
+                std::cin >> charIndex;
+                std::cout << "Enter number of characters to copy: ";
+                std::cin >> numChars;
+                std::cin.ignore();
+                editor.copyText(lineNumber, charIndex, numChars);
+            }
+                break;
+            case 14:
                 editor.clearText();
                 std::cout << "Console cleared\n";
                 break;
