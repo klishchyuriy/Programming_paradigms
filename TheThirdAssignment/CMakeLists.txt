@@ -23,3 +23,9 @@ set_target_properties(TheThirdAssignment PROPERTIES
 # Зв'язати бібліотеку з виконуваним файлом
 target_link_libraries(TheThirdAssignment PRIVATE caesar)
 
+
+# Add static library target
+add_library(caesar_static STATIC caesar.cpp)
+
+# Link static library for testing
+target_link_libraries(TheThirdAssignment PRIVATE caesar_static)
