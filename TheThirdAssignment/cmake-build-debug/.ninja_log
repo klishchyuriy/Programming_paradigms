@@ -1,0 +1,10 @@
+# ninja log v5
+1	33	1718743629569455207	build.ninja	595d736b22fe3e61
+5	30	1718742618747661863	CMakeFiles/caesar.dir/caesar.cpp.o	add44db39ca1eacc
+1	25	1718722391676176765	CMakeFiles/TheThirdAssignment.dir/caesar.cpp.o	60ad7654b1cbaef9
+5	261	1718743487256946656	CMakeFiles/TheThirdAssignment.dir/main.cpp.o	954af8b7f834057c
+5	28	1718743487024666264	CMakeFiles/caesar_static.dir/caesar.cpp.o	97f1ec0df9019482
+8	36	1718719354746992400	CMakeFiles/TheThirdAssignment.dir/libstatic.cpp.o	3887d3143d53e248
+5	28	1718743604255730735	TheThirdAssignment	b3ac54c483d7a202
+30	54	1718742618772294446	libcaesar.dylib	ccf5dcbcfdcb06c6
+28	110	1718743487108079000	libcaesar_static.a	de33c0a0a76c014a

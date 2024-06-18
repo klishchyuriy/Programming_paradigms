@@ -1,0 +1,5 @@
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheThirdAssignment/cmake-build-debug/CMakeFiles/caesar.dir
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheThirdAssignment/cmake-build-debug/CMakeFiles/TheThirdAssignment.dir
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheThirdAssignment/cmake-build-debug/CMakeFiles/caesar_static.dir
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheThirdAssignment/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheThirdAssignment/cmake-build-debug/CMakeFiles/rebuild_cache.dir
