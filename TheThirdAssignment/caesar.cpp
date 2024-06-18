@@ -18,3 +18,19 @@ char* encrypt(char* rawText, int key) {
     encryptedText[len] = '\0';
     return encryptedText;
 }
+
+char* decrypt(char* encryptedText, int key) {
+    int len = strlen(encryptedText);
+    char* decryptedText = (char*)malloc(len + 1);
+
+    for (int i = 0; i < len; i++) {
+        if (isalpha(encryptedText[i])) {
+            char offset = islower(encryptedText[i]) ? 'a' : 'A';
+            decryptedText[i] = ((encryptedText[i] - offset - key + 26) % 26) + offset;
+        } else {
+            decryptedText[i] = encryptedText[i];
+        }
+    }
+    decryptedText[len] = '\0';
+    return decryptedText;
+}
