@@ -8,8 +8,8 @@ public:
     TextEditor(const char* libraryPath);
 
     void run();
-    void encrypt(const char* input, char* output, int key);
-    void decrypt(const char* input, char* output, int key);
+    void encryptFile(const char* inputFile, const char* outputFile, int key);
+    void decryptFile(const char* inputFile, const char* outputFile, int key);
 
 private:
     CaesarCipher caesarCipher;

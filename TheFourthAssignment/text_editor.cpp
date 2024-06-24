@@ -1,42 +1,55 @@
 #include "text_editor.h"
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 TextEditor::TextEditor(const char* libraryPath) : caesarCipher(libraryPath) {}
 
 void TextEditor::run() {
-    int choice;
-    std::cout << "Choose operation:\n1. Encrypt\n2. Decrypt\n";
-    std::cin >> choice;
+}
 
-    if (choice == 1) {
-        char input[256], output[256];
-        int key;
-        std::cout << "Enter text to encrypt: ";
-        std::cin.ignore();
-        std::cin.getline(input, 256);
-        std::cout << "Enter key: ";
-        std::cin >> key;
-        encrypt(input, output, key);
-        std::cout << "Encrypted text: " << output << std::endl;
-    } else if (choice == 2) {
-        char input[256], output[256];
-        int key;
-        std::cout << "Enter text to decrypt: ";
-        std::cin.ignore();
-        std::cin.getline(input, 256);
-        std::cout << "Enter key: ";
-        std::cin >> key;
-        decrypt(input, output, key);
-        std::cout << "Decrypted text: " << output << std::endl;
-    } else {
-        std::cerr << "Invalid choice\n";
+void TextEditor::encryptFile(const char* inputFile, const char* outputFile, int key) {
+    const size_t CHUNK_SIZE = 1024;
+    char inputChunk[CHUNK_SIZE];
+    char outputChunk[CHUNK_SIZE];
+
+    std::ifstream inFile(inputFile, std::ios::binary);
+    std::ofstream outFile(outputFile, std::ios::binary);
+
+    if (!inFile.is_open() || !outFile.is_open()) {
+        std::cerr << "Failed to open file for encryption." << std::endl;
+        return;
     }
+
+    while (inFile.read(inputChunk, CHUNK_SIZE) || inFile.gcount() > 0) {
+        size_t bytesRead = inFile.gcount();
+        caesarCipher.encrypt(inputChunk, outputChunk, key);
+        outFile.write(outputChunk, bytesRead);
+    }
+
+    inFile.close();
+    outFile.close();
 }
 
-void TextEditor::encrypt(const char* input, char* output, int key) {
-    caesarCipher.encrypt(input, output, key);
-}
+void TextEditor::decryptFile(const char* inputFile, const char* outputFile, int key) {
+    const size_t CHUNK_SIZE = 1024;
+    char inputChunk[CHUNK_SIZE];
+    char outputChunk[CHUNK_SIZE];
 
-void TextEditor::decrypt(const char* input, char* output, int key) {
-    caesarCipher.decrypt(input, output, key);
+    std::ifstream inFile(inputFile, std::ios::binary);
+    std::ofstream outFile(outputFile, std::ios::binary);
+
+    if (!inFile.is_open() || !outFile.is_open()) {
+        std::cerr << "Failed to open file for decryption." << std::endl;
+        return;
+    }
+
+    while (inFile.read(inputChunk, CHUNK_SIZE) || inFile.gcount() > 0) {
+        size_t bytesRead = inFile.gcount();
+        caesarCipher.decrypt(inputChunk, outputChunk, key);
+        outFile.write(outputChunk, bytesRead);
+    }
+
+    inFile.close();
+    outFile.close();
 }
