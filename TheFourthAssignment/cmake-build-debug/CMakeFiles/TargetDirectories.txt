@@ -1,0 +1,3 @@
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheFourthAssignment/cmake-build-debug/CMakeFiles/TheFourthAssignment.dir
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheFourthAssignment/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/klishchyuriy/Desktop/Programming_paradigms/TheFourthAssignment/cmake-build-debug/CMakeFiles/rebuild_cache.dir

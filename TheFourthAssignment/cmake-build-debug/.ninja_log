@@ -1,0 +1,6 @@
+# ninja log v5
+6	276	1719258427657311538	CMakeFiles/TheFourthAssignment.dir/main.cpp.o	8a9f1d08a20ecdb9
+311	335	1719258439638663703	TheFourthAssignment	8404b73b933ab978
+5	311	1719258439612042346	CMakeFiles/TheFourthAssignment.dir/caesar_cipher.cpp.o	bb5ba80501de6695
+5	24	1719258888802276925	CMakeFiles/TheFourthAssignment.dir/caesar.cpp.o	180ff504313f4fb2
+25	52	1719258888829956578	TheFourthAssignment	ea436d4d6a6ef259
